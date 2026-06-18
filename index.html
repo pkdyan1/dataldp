@@ -337,7 +337,7 @@
         function closePasswordModal() { document.getElementById('passwordModal').classList.add('hidden-section'); document.getElementById('passwordModal').classList.remove('flex'); }
         function verifyAdminPassword() {
             const pwdInput = document.getElementById('adminPasswordInput').value;
-            if(pwdInput === 'kzam' || pwdInput === 'ctsyah') { closePasswordModal(); fetchSemuaData(); } 
+            if(pwdInput === 'LDP2611' || pwdInput === 'LDP2611') { closePasswordModal(); fetchSemuaData(); } 
             else { document.getElementById('passwordError').classList.remove('hidden-section'); }
         }
         document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') verifyAdminPassword(); });
