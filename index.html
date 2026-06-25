@@ -56,9 +56,59 @@
                         <input type="text" name="jawatan" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-500" placeholder="Cth: Penolong Pegawai Perubatan U29">
                     </div>
 
+                    <!-- Dropdown Unit dengan Logik 'Lain-lain' -->
                     <div class="col-span-1 md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Unit / Bahagian / Klinik</label>
-                        <input type="text" name="unit" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-500" placeholder="Cth: Unit Kecemasan / KK Yan">
+                        <select id="unitDropdown" onchange="toggleLainLain('main')" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-blue-500 bg-white">
+                            <option value="" disabled selected>-- Sila Pilih Unit / Klinik --</option>
+                            <optgroup label="Pejabat Kesihatan Daerah (PKD)">
+                                <option value="Unit Pengurusan">Unit Pengurusan</option>
+                                <option value="Unit Pentadbiran">Unit Pentadbiran</option>
+                                <option value="Unit Kewangan">Unit Kewangan</option>
+                                <option value="Unit Makmal">Unit Makmal</option>
+                                <option value="Unit Fisioterapi">Unit Fisioterapi</option>
+                                <option value="Unit Pemakanan">Unit Pemakanan (Makanan)</option>
+                                <option value="Unit Psikologi">Unit Psikologi</option>
+                                <option value="Unit Farmasi">Unit Farmasi</option>
+                            </optgroup>
+                            <optgroup label="Unit Kawalan Penyakit (Inspektorat)">
+                                <option value="Unit Kesihatan Awam">Unit Kesihatan Awam</option>
+                                <option value="Unit Kesihatan Keluarga">Unit Kesihatan Keluarga</option>
+                                <option value="Unit Kawalan Penyakit Berjangkit (CDC)">Unit Kawalan Penyakit Berjangkit (CDC)</option>
+                                <option value="Unit Kawalan Penyakit Tidak Berjangkit (NCD)">Unit Kawalan Penyakit Tidak Berjangkit (NCD)</option>
+                                <option value="Unit Vektor">Unit Vektor</option>
+                                <option value="Unit Promosi Kesihatan">Unit Promosi Kesihatan</option>
+                                <option value="Unit Keselamatan & Kualiti Makanan (UKKM)">Unit Keselamatan & Kualiti Makanan (UKKM)</option>
+                            </optgroup>
+                            <optgroup label="Klinik Kesihatan">
+                                <option value="Klinik Kesihatan Yan">Klinik Kesihatan Yan</option>
+                                <option value="Klinik Kesihatan Sungai Limau">Klinik Kesihatan Sungai Limau</option>
+                                <option value="Klinik Kesihatan Singkir">Klinik Kesihatan Singkir</option>
+                                <option value="Klinik Kesihatan Guar Chempedak">Klinik Kesihatan Guar Chempedak</option>
+                            </optgroup>
+                            <option value="Lain-lain">Lain-lain / Tambah Unit Baru</option>
+                        </select>
+                        <input type="hidden" name="unit" id="hiddenUnitMain">
+
+                        <!-- Bahagian Tambahan Jika Pilih Lain-lain -->
+                        <div id="divMainLain" class="hidden-section mt-3 p-4 bg-indigo-50 border border-indigo-100 rounded-lg shadow-inner">
+                            <label class="block text-sm font-bold text-indigo-800 mb-2"><i class="fas fa-info-circle mr-1"></i> Maklumat Tambahan Unit Baru</label>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Kategori Induk</label>
+                                    <select id="mainKategoriLain" class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-white focus:ring-2 focus:ring-indigo-500">
+                                        <option value="Pejabat Kesihatan Daerah (PKD)">Pejabat Kesihatan Daerah (PKD)</option>
+                                        <option value="Unit Kawalan Penyakit (Inspektorat)">Unit Kawalan Penyakit (Inspektorat)</option>
+                                        <option value="Klinik Kesihatan">Klinik Kesihatan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Unit / Klinik Tersebut</label>
+                                    <input type="text" id="mainNamaUnitLain" class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Contoh: Klinik Desa Sungai Dedap">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-span-1 md:col-span-2">
@@ -137,7 +187,12 @@
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-6">
                 <div class="flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
-                        <h3 class="text-xl font-bold text-gray-800" id="dashNama">Nama Pegawai</h3>
+                        <div class="flex items-center flex-wrap gap-3 mb-1">
+                            <h3 class="text-xl font-bold text-gray-800" id="dashNama">Nama Pegawai</h3>
+                            <button onclick="openEditProfileModal()" class="text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-600 px-3 py-1 rounded-md text-xs font-semibold transition-colors border border-indigo-200 hover:border-indigo-600 shadow-sm flex items-center">
+                                <i class="fas fa-user-edit mr-1"></i> Kemaskini Profil
+                            </button>
+                        </div>
                         <p class="text-gray-600 text-sm mt-1">
                             <i class="fas fa-id-card w-5 text-center text-gray-400"></i> <span id="dashIC">000000000000</span><br>
                             <i class="fas fa-briefcase w-5 text-center text-gray-400"></i> <span id="dashJawatan">Jawatan</span><br>
@@ -195,6 +250,18 @@
             <h2 class="text-xl font-bold text-gray-800 mb-2 border-b pb-2"><i class="fas fa-chart-bar mr-2"></i> Rumusan Keseluruhan Pegawai</h2>
             <p class="text-sm text-gray-500 mb-6">Paparan khas untuk Pentadbir (CC / PT) melihat status jam LDP staf.</p>
             
+            <!-- Bahagian Penapis (Filter) -->
+            <div class="mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row md:items-center gap-4 justify-between">
+                <div class="flex items-center text-gray-700 font-bold">
+                    <i class="fas fa-filter text-indigo-500 mr-2"></i> Tapis Data
+                </div>
+                <div class="w-full md:w-auto flex-1 max-w-md">
+                    <select id="filterUnit" onchange="applyUnitFilter()" class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-800 font-medium">
+                        <option value="Semua">Tunjuk Semua Unit / Klinik</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
@@ -251,6 +318,87 @@
         </div>
     </div>
 
+    <!-- Modal Edit Profil -->
+    <div id="editProfileModal" class="fixed inset-0 bg-black bg-opacity-50 hidden-section items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 max-h-screen overflow-y-auto">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 border-b pb-2"><i class="fas fa-user-cog mr-2 text-indigo-600"></i>Kemaskini Maklumat Diri</h3>
+            <form id="editProfileForm">
+                <input type="hidden" name="action" value="kemaskini_profil">
+                <input type="hidden" name="ic" id="editProfileIC">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input type="text" name="nama" id="editProfileNama" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Jawatan & Gred</label>
+                        <input type="text" name="jawatan" id="editProfileJawatan" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Unit / Bahagian / Klinik Baru</label>
+                        <select id="editProfileUnit" onchange="toggleLainLain('profile')" required class="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 bg-white">
+                            <option value="" disabled>-- Pilih Unit --</option>
+                            <optgroup label="Pejabat Kesihatan Daerah (PKD)">
+                                <option value="Unit Pengurusan">Unit Pengurusan</option>
+                                <option value="Unit Pentadbiran">Unit Pentadbiran</option>
+                                <option value="Unit Kewangan">Unit Kewangan</option>
+                                <option value="Unit Makmal">Unit Makmal</option>
+                                <option value="Unit Fisioterapi">Unit Fisioterapi</option>
+                                <option value="Unit Pemakanan">Unit Pemakanan (Makanan)</option>
+                                <option value="Unit Psikologi">Unit Psikologi</option>
+                                <option value="Unit Farmasi">Unit Farmasi</option>
+                            </optgroup>
+                            <optgroup label="Unit Kawalan Penyakit (Inspektorat)">
+                                <option value="Unit Kesihatan Awam">Unit Kesihatan Awam</option>
+                                <option value="Unit Kesihatan Keluarga">Unit Kesihatan Keluarga</option>
+                                <option value="Unit Kawalan Penyakit Berjangkit (CDC)">Unit Kawalan Penyakit Berjangkit (CDC)</option>
+                                <option value="Unit Kawalan Penyakit Tidak Berjangkit (NCD)">Unit Kawalan Penyakit Tidak Berjangkit (NCD)</option>
+                                <option value="Unit Vektor">Unit Vektor</option>
+                                <option value="Unit Promosi Kesihatan">Unit Promosi Kesihatan</option>
+                                <option value="Unit Keselamatan & Kualiti Makanan (UKKM)">Unit Keselamatan & Kualiti Makanan (UKKM)</option>
+                            </optgroup>
+                            <optgroup label="Klinik Kesihatan">
+                                <option value="Klinik Kesihatan Yan">Klinik Kesihatan Yan</option>
+                                <option value="Klinik Kesihatan Sungai Limau">Klinik Kesihatan Sungai Limau</option>
+                                <option value="Klinik Kesihatan Singkir">Klinik Kesihatan Singkir</option>
+                                <option value="Klinik Kesihatan Guar Chempedak">Klinik Kesihatan Guar Chempedak</option>
+                            </optgroup>
+                            <option value="Lain-lain">Lain-lain / Tambah Unit Baru</option>
+                        </select>
+                        <input type="hidden" name="unit" id="hiddenUnitProfile">
+
+                        <!-- Bahagian Tambahan Profil Jika Pilih Lain-lain -->
+                        <div id="divProfileLain" class="hidden-section mt-3 p-4 bg-indigo-50 border border-indigo-100 rounded-lg shadow-inner">
+                            <label class="block text-sm font-bold text-indigo-800 mb-2"><i class="fas fa-info-circle mr-1"></i> Maklumat Tambahan</label>
+                            
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Pilih Kategori Induk</label>
+                                    <select id="profileKategoriLain" class="w-full rounded-lg border border-gray-300 px-4 py-2 bg-white focus:ring-2 focus:ring-indigo-500">
+                                        <option value="Pejabat Kesihatan Daerah (PKD)">Pejabat Kesihatan Daerah (PKD)</option>
+                                        <option value="Unit Kawalan Penyakit (Inspektorat)">Unit Kawalan Penyakit (Inspektorat)</option>
+                                        <option value="Klinik Kesihatan">Klinik Kesihatan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Unit / Klinik Tersebut</label>
+                                    <input type="text" id="profileNamaUnitLain" class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500" placeholder="Contoh: Klinik Desa Sungai Dedap">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="editProfileError" class="text-red-500 text-sm mt-4 hidden-section"></div>
+                <div class="flex gap-2 justify-end mt-6">
+                    <button type="button" onclick="closeEditProfileModal()" class="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium">Batal</button>
+                    <button type="submit" id="btnSimpanProfile" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium">Kemaskini</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Edit Kursus -->
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden-section items-center justify-center p-4 z-50">
         <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6">
@@ -259,7 +407,7 @@
                 <input type="hidden" name="action" value="kemaskini">
                 <input type="hidden" name="ic" id="editIc">
                 <input type="hidden" name="original_tajuk" id="editOriginalTajuk">
-                <input type="hidden" name="tarikh_baru" id="editHiddenTarikh"> <!-- Hidden field for backend -->
+                <input type="hidden" name="tarikh_baru" id="editHiddenTarikh">
                 
                 <div class="space-y-4">
                     <div>
@@ -333,6 +481,9 @@
         // Pembolehubah Global
         let currentPegawaiIC = "";
         let currentTajukToDelete = "";
+        let currentSenaraiKursus = []; 
+        let allAdminData = []; 
+        let currentAdminRole = 'semua';
 
         // Elements
         const formSection = document.getElementById('formSection');
@@ -340,12 +491,41 @@
         const adminSection = document.getElementById('adminSection');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
+        // Fungsi Kawal Paparan 'Lain-Lain' Dropdown
+        function toggleLainLain(type) {
+            if (type === 'main') {
+                const val = document.getElementById('unitDropdown').value;
+                const div = document.getElementById('divMainLain');
+                const inputNama = document.getElementById('mainNamaUnitLain');
+                if (val === 'Lain-lain') {
+                    div.classList.remove('hidden-section');
+                    inputNama.required = true;
+                } else {
+                    div.classList.add('hidden-section');
+                    inputNama.required = false;
+                }
+            } else if (type === 'profile') {
+                const val = document.getElementById('editProfileUnit').value;
+                const div = document.getElementById('divProfileLain');
+                const inputNama = document.getElementById('profileNamaUnitLain');
+                if (val === 'Lain-lain') {
+                    div.classList.remove('hidden-section');
+                    inputNama.required = true;
+                } else {
+                    div.classList.add('hidden-section');
+                    inputNama.required = false;
+                }
+            }
+        }
+
         // Navigation Functions
         function showFormView() {
             dashboardSection.classList.add('hidden-section'); 
             adminSection.classList.add('hidden-section'); 
             formSection.classList.remove('hidden-section'); 
             document.getElementById('ldpForm').reset();
+            
+            toggleLainLain('main'); // pastikan disembunyikan secara default
             
             // Set default: 1 hari
             const radio1Hari = document.querySelector('input[name="jenis_tempoh"][value="1hari"]');
@@ -370,7 +550,27 @@
             form.elements['nama'].value = document.getElementById('dashNama').innerText;
             form.elements['ic'].value = document.getElementById('dashIC').innerText;
             form.elements['jawatan'].value = document.getElementById('dashJawatan').innerText;
-            form.elements['unit'].value = document.getElementById('dashUnit').innerText;
+            
+            // Set unit dropdown jika padan dengan sejarah
+            const dashUnitStr = (document.getElementById('dashUnit').innerText || "").trim();
+            const unitSelect = document.getElementById('unitDropdown');
+            let optionFound = false;
+            
+            for (let i = 0; i < unitSelect.options.length; i++) {
+                if (unitSelect.options[i].value.toLowerCase() === dashUnitStr.toLowerCase()) {
+                    unitSelect.selectedIndex = i;
+                    optionFound = true;
+                    break;
+                }
+            }
+            
+            if (!optionFound && dashUnitStr !== "") { 
+                unitSelect.value = "Lain-lain"; 
+                document.getElementById('mainNamaUnitLain').value = dashUnitStr;
+            } else {
+                document.getElementById('mainNamaUnitLain').value = "";
+            }
+            toggleLainLain('main');
             
             form.elements['tajuk'].value = '';
 
@@ -467,7 +667,6 @@
                 sd = document.getElementById('inputTarikhMula').value;
                 ed = document.getElementById('inputTarikhTamat').value;
                 
-                // Jika isi tarikh mula tapi tarikh tamat kosong, jadikan sama
                 if(sd && !ed) {
                     document.getElementById('inputTarikhTamat').value = sd;
                     ed = sd;
@@ -534,10 +733,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Apply fungsi pengiraan kepada borang Edit
             attachAutoCalc('editTarikhMula', 'editTarikhTamat', 'editMasaMula', 'editMasaTamat', 'editJam');
             
-            // Apply pengiraan kepada borang utama (Tambah Kursus)
             ['inputTarikhSatu', 'inputTarikhMula', 'inputTarikhTamat', 'inputMasaMula', 'inputMasaTamat'].forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.addEventListener('change', calculateMainFormHours);
@@ -549,10 +746,20 @@
         // ==========================================
         function openPasswordModal() { document.getElementById('passwordModal').classList.remove('hidden-section'); document.getElementById('passwordModal').classList.add('flex'); document.getElementById('adminPasswordInput').value = ''; document.getElementById('passwordError').classList.add('hidden-section'); }
         function closePasswordModal() { document.getElementById('passwordModal').classList.add('hidden-section'); document.getElementById('passwordModal').classList.remove('flex'); }
+        
         function verifyAdminPassword() {
             const pwdInput = document.getElementById('adminPasswordInput').value;
-            if(pwdInput === 'LDP2611' || pwdInput === 'LDP2611') { closePasswordModal(); fetchSemuaData(); } 
-            else { document.getElementById('passwordError').classList.remove('hidden-section'); }
+            if(pwdInput === 'LDP2611') { 
+                currentAdminRole = 'semua';
+                closePasswordModal(); 
+                fetchSemuaData(); 
+            } else if(pwdInput === 'kZam') {
+                currentAdminRole = 'pengurusan';
+                closePasswordModal(); 
+                fetchSemuaData(); 
+            } else { 
+                document.getElementById('passwordError').classList.remove('hidden-section'); 
+            }
         }
         document.getElementById('adminPasswordInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') verifyAdminPassword(); });
 
@@ -562,7 +769,12 @@
         // ==========================================
         // FUNGSI MODAL KEMASKINI (EDIT)
         // ==========================================
-        function openEditModal(tajuk, tarikh, jam) {
+        function openEditModal(index) {
+            const kursus = currentSenaraiKursus[index];
+            const tajuk = kursus.tajuk;
+            const tarikh = kursus.tarikh;
+            const jam = kursus.jam;
+
             document.getElementById('editModal').classList.remove('hidden-section'); 
             document.getElementById('editModal').classList.add('flex');
             document.getElementById('editError').classList.add('hidden-section');
@@ -571,7 +783,6 @@
             document.getElementById('editOriginalTajuk').value = tajuk;
             document.getElementById('editTajuk').value = tajuk;
             
-            // Proses string dari backend ("10/12/2026" ATAU "10/12/2026 - 12/12/2026")
             let startDate = tarikh;
             let endDate = tarikh;
             if (tarikh && tarikh.includes(' - ')) {
@@ -584,7 +795,6 @@
             document.getElementById('editTarikhTamat').value = parseDateToYMD(endDate);
             document.getElementById('editJam').value = jam;
             
-            // Kosongkan masa sbb kita tak simpan masa spesifik di DB (hanya jam)
             document.getElementById('editMasaMula').value = '';
             document.getElementById('editMasaTamat').value = '';
         }
@@ -593,14 +803,48 @@
         // ==========================================
         // FUNGSI MODAL PADAM (DELETE)
         // ==========================================
-        function openDeleteModal(tajuk) {
-            currentTajukToDelete = tajuk;
-            document.getElementById('deleteCourseName').innerText = tajuk;
+        function openDeleteModal(index) {
+            const kursus = currentSenaraiKursus[index];
+            currentTajukToDelete = kursus.tajuk;
+            document.getElementById('deleteCourseName').innerText = kursus.tajuk;
             document.getElementById('deleteModal').classList.remove('hidden-section'); 
             document.getElementById('deleteModal').classList.add('flex');
         }
         function closeDeleteModal() { document.getElementById('deleteModal').classList.add('hidden-section'); document.getElementById('deleteModal').classList.remove('flex'); }
 
+        // ==========================================
+        // FUNGSI MODAL KEMASKINI PROFIL (NAMA / JAWATAN / UNIT)
+        // ==========================================
+        function openEditProfileModal() {
+            document.getElementById('editProfileModal').classList.remove('hidden-section');
+            document.getElementById('editProfileModal').classList.add('flex');
+            document.getElementById('editProfileError').classList.add('hidden-section');
+            
+            document.getElementById('editProfileIC').value = currentPegawaiIC;
+            document.getElementById('editProfileNama').value = document.getElementById('dashNama').innerText;
+            document.getElementById('editProfileJawatan').value = document.getElementById('dashJawatan').innerText;
+            
+            const dashUnitStr = (document.getElementById('dashUnit').innerText || "").trim();
+            const profileUnitSelect = document.getElementById('editProfileUnit');
+            let optionFound = false;
+
+            for (let i = 0; i < profileUnitSelect.options.length; i++) {
+                if (profileUnitSelect.options[i].value.toLowerCase() === dashUnitStr.toLowerCase()) {
+                    profileUnitSelect.selectedIndex = i;
+                    optionFound = true;
+                    break;
+                }
+            }
+
+            if (!optionFound && dashUnitStr !== "") {
+                profileUnitSelect.value = "Lain-lain";
+                document.getElementById('profileNamaUnitLain').value = dashUnitStr;
+            } else {
+                document.getElementById('profileNamaUnitLain').value = "";
+            }
+            toggleLainLain('profile');
+        }
+        function closeEditProfileModal() { document.getElementById('editProfileModal').classList.add('hidden-section'); document.getElementById('editProfileModal').classList.remove('flex'); }
 
         // ==========================================
         // FETCH APIs (HUBUNGI GOOGLE APPS SCRIPT)
@@ -610,13 +854,12 @@
         document.getElementById('ldpForm').addEventListener('submit', e => {
             e.preventDefault();
             
-            // Semak jenis tempoh yang dipilih dan hantar string tarikh yang betul
             const jenis = document.querySelector('input[name="jenis_tempoh"]:checked').value;
             let startD, endD;
             
             if (jenis === '1hari') {
                 startD = formatDateToDMY(document.getElementById('inputTarikhSatu').value);
-                endD = startD; // Tarikh sama
+                endD = startD;
             } else {
                 startD = formatDateToDMY(document.getElementById('inputTarikhMula').value);
                 endD = formatDateToDMY(document.getElementById('inputTarikhTamat').value);
@@ -625,13 +868,45 @@
             const tarikhVal = (startD === endD) ? startD : `${startD} - ${endD}`;
             document.getElementById('hiddenTarikh').value = tarikhVal;
 
+            // Kendalikan Logik Unit 'Lain-lain'
+            const unitDropdown = document.getElementById('unitDropdown').value;
+            if (unitDropdown === 'Lain-lain') {
+                document.getElementById('hiddenUnitMain').value = document.getElementById('mainNamaUnitLain').value.trim();
+            } else {
+                document.getElementById('hiddenUnitMain').value = unitDropdown;
+            }
+
             if(scriptURL === 'MASUKKAN_URL_WEB_APP_ANDA_DI_SINI') { alert("Sila masukkan URL Apps Script di dalam fail HTML."); return; }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sedang Menyimpan...';
+            submitBtn.disabled = true;
+            submitBtn.classList.replace('hover:bg-blue-700', 'opacity-70');
+
             showLoading('Menyimpan rekod anda...');
             
             fetch(scriptURL, { method: 'POST', body: new FormData(e.target) })
             .then(res => res.json())
-            .then(data => { hideLoading(); if(data.result === 'success') { populateDashboard(data); showDashboardView('Rekod baru berjaya ditambah!'); } else { alert('Ralat: ' + (data.message || 'Gagal menyimpan.')); } })
-            .catch(err => { hideLoading(); alert('Ralat pelayan/sambungan.'); console.error(err); });
+            .then(data => { 
+                hideLoading(); 
+                if(data.result === 'success') { 
+                    populateDashboard(data); 
+                    showDashboardView('Rekod baru berjaya ditambah!'); 
+                } else { 
+                    alert('Ralat: ' + (data.message || 'Gagal menyimpan.')); 
+                } 
+            })
+            .catch(err => { 
+                hideLoading(); 
+                alert('Ralat pelayan/sambungan. Sila semak internet.'); 
+                console.error(err); 
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalBtnHtml;
+                submitBtn.disabled = false;
+                submitBtn.classList.replace('opacity-70', 'hover:bg-blue-700');
+            });
         });
 
         // 2. SEMAK IC
@@ -650,7 +925,6 @@
         document.getElementById('editForm').addEventListener('submit', e => {
             e.preventDefault();
 
-            // Gabung tarikh untuk hantar string format yang betul ke backend
             const startD = formatDateToDMY(document.getElementById('editTarikhMula').value);
             const endD = formatDateToDMY(document.getElementById('editTarikhTamat').value);
             const tarikhVal = (startD === endD) ? startD : `${startD} - ${endD}`;
@@ -692,7 +966,36 @@
             .catch(err => { btn.innerHTML = 'Ya, Padam'; btn.disabled = false; alert("Ralat sambungan."); });
         }
 
-        // 5. DATA KESELURUHAN PENTADBIR
+        // 5. FETCH KEMASKINI PROFIL
+        document.getElementById('editProfileForm').addEventListener('submit', e => {
+            e.preventDefault();
+
+            // Kendalikan Logik Unit 'Lain-lain' untuk Profil
+            const unitDropdown = document.getElementById('editProfileUnit').value;
+            if (unitDropdown === 'Lain-lain') {
+                document.getElementById('hiddenUnitProfile').value = document.getElementById('profileNamaUnitLain').value.trim();
+            } else {
+                document.getElementById('hiddenUnitProfile').value = unitDropdown;
+            }
+
+            const btn = document.getElementById('btnSimpanProfile'); btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Menyimpan...'; btn.disabled = true;
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(e.target) })
+            .then(res => res.json())
+            .then(data => { 
+                btn.innerHTML = 'Kemaskini'; btn.disabled = false; 
+                if(data.result === 'success') { 
+                    closeEditProfileModal(); 
+                    populateDashboard(data); 
+                    showDashboardView('Maklumat profil berjaya dikemaskini!'); 
+                } else { 
+                    document.getElementById('editProfileError').innerText = data.message; document.getElementById('editProfileError').classList.remove('hidden-section'); 
+                } 
+            })
+            .catch(err => { btn.innerHTML = 'Kemaskini'; btn.disabled = false; document.getElementById('editProfileError').innerText = "Ralat pelayan."; document.getElementById('editProfileError').classList.remove('hidden-section'); });
+        });
+
+        // 6. DATA KESELURUHAN PENTADBIR
         function fetchSemuaData() {
             if(scriptURL === 'MASUKKAN_URL_WEB_APP_ANDA_DI_SINI') { alert("Sila masukkan Web App URL dahulu."); return; }
             showLoading('Mengambil rumusan keseluruhan...');
@@ -700,7 +1003,15 @@
 
             fetch(scriptURL, { method: 'POST', body: formData })
             .then(res => res.json())
-            .then(data => { hideLoading(); if(data.result === 'success') { populateAdminTable(data.data); showAdminView(); } else { alert('Ralat: ' + data.message); } })
+            .then(data => { 
+                hideLoading(); 
+                if(data.result === 'success') { 
+                    populateAdminTable(data.data); 
+                    showAdminView(); 
+                } else { 
+                    alert('Ralat: ' + data.message); 
+                } 
+            })
             .catch(err => { hideLoading(); alert('Ralat pelayan/sambungan.'); console.error(err); });
         }
 
@@ -709,7 +1020,8 @@
         // ==========================================
         
         function populateDashboard(data) {
-            currentPegawaiIC = data.pegawai.ic; // Simpan IC untuk rujukan fungsi edit/delete
+            currentPegawaiIC = data.pegawai.ic; 
+            currentSenaraiKursus = data.senaraiKursus || []; // Simpan array ke memori global
             
             document.getElementById('dashNama').innerText = data.pegawai.nama; 
             document.getElementById('dashIC').innerText = data.pegawai.ic; 
@@ -732,13 +1044,10 @@
             }
 
             const tbody = document.getElementById('tableBody'); tbody.innerHTML = '';
-            if(data.senaraiKursus && data.senaraiKursus.length > 0) {
-                data.senaraiKursus.forEach((k, i) => { 
+            if(currentSenaraiKursus.length > 0) {
+                currentSenaraiKursus.forEach((k, i) => { 
                     const tr = document.createElement('tr'); 
                     tr.className = "hover:bg-gray-50 transition-colors"; 
-                    
-                    // Gantikan ' atau " supaya tidak pecah di dalam HTML onclick string
-                    const safeTajuk = k.tajuk.replace(/'/g, "\\'").replace(/"/g, "&quot;");
                     
                     tr.innerHTML = `
                         <td class="px-6 py-4 text-gray-500">${i + 1}</td>
@@ -746,10 +1055,10 @@
                         <td class="px-6 py-4 text-gray-600 whitespace-nowrap">${k.tarikh}</td>
                         <td class="px-6 py-4 text-center font-bold text-blue-600">${k.jam} j</td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            <button onclick="openEditModal('${safeTajuk}', '${k.tarikh}', ${k.jam})" class="text-indigo-500 hover:text-indigo-700 mx-2 transition-colors" title="Kemaskini">
+                            <button onclick="openEditModal(${i})" class="text-indigo-500 hover:text-indigo-700 mx-2 transition-colors" title="Kemaskini Kursus">
                                 <i class="fas fa-edit text-lg"></i>
                             </button>
-                            <button onclick="openDeleteModal('${safeTajuk}')" class="text-red-500 hover:text-red-700 mx-2 transition-colors" title="Padam">
+                            <button onclick="openDeleteModal(${i})" class="text-red-500 hover:text-red-700 mx-2 transition-colors" title="Padam">
                                 <i class="fas fa-trash-alt text-lg"></i>
                             </button>
                         </td>
@@ -761,16 +1070,52 @@
             }
         }
 
+        // ==========================================
+        // FUNGSI ADMIN FILTER
+        // ==========================================
         function populateAdminTable(senaraiPegawai) {
+            let dataUntukDipapar = senaraiPegawai;
+            if (currentAdminRole === 'pengurusan') {
+                dataUntukDipapar = senaraiPegawai.filter(p => {
+                    if(!p.unit) return false;
+                    const u = p.unit.toLowerCase();
+                    return u.includes('pengurusan') || u.includes('pentadbiran') || u.includes('kewangan');
+                });
+            }
+
+            allAdminData = dataUntukDipapar;
+            
+            const unitSelect = document.getElementById('filterUnit');
+            const uniqueUnits = [...new Set(dataUntukDipapar.map(p => p.unit))].filter(Boolean).sort();
+            
+            unitSelect.innerHTML = '<option value="Semua">Tunjuk Semua Unit / Klinik</option>';
+            uniqueUnits.forEach(unit => {
+                unitSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+
+            renderAdminRows(dataUntukDipapar);
+        }
+
+        function applyUnitFilter() {
+            const selectedUnit = document.getElementById('filterUnit').value;
+            if (selectedUnit === 'Semua') {
+                renderAdminRows(allAdminData);
+            } else {
+                const filteredData = allAdminData.filter(p => p.unit === selectedUnit);
+                renderAdminRows(filteredData);
+            }
+        }
+
+        function renderAdminRows(dataToRender) {
             const tbody = document.getElementById('adminTableBody'); 
             tbody.innerHTML = '';
             
-            if(senaraiPegawai.length === 0) { 
-                tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-gray-500">Tiada data direkodkan dalam sistem.</td></tr>`; 
+            if(dataToRender.length === 0) { 
+                tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-gray-500">Tiada data direkodkan dalam sistem / unit ini.</td></tr>`; 
                 return; 
             }
 
-            senaraiPegawai.forEach((pegawai, index) => {
+            dataToRender.forEach((pegawai, index) => {
                 const statusBadge = pegawai.cukupLimit 
                     ? `<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full border border-green-200"><i class="fas fa-check mr-1"></i>Selesai</span>`
                     : `<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-1 rounded-full border border-yellow-200">Belum Capai</span>`;
@@ -788,7 +1133,7 @@
                             <span class="text-indigo-600 font-medium"><i class="fas fa-briefcase w-4 text-center"></i> ${jawatanTeks}</span>
                         </div>
                     </td>
-                    <td class="px-5 py-4 text-gray-600 text-sm">${pegawai.unit}</td>
+                    <td class="px-5 py-4 text-gray-600 text-sm font-medium">${pegawai.unit}</td>
                     <td class="px-5 py-4 text-center"><span class="font-bold ${pegawai.cukupLimit ? 'text-green-600' : 'text-blue-600'} text-lg">${pegawai.totalJam} j</span></td>
                     <td class="px-5 py-4 text-center font-semibold text-orange-500">${pegawai.baki} j</td>
                     <td class="px-5 py-4 text-center">${statusBadge}</td>
